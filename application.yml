@@ -1,0 +1,76 @@
+server:
+  port: ${PORT:8455}
+
+version: v1.0
+
+spring:
+  # APPLICATION SETTINGS (SpringApplication)
+  main:
+    show-banner: true
+    #web-environment: false
+
+    #admin:
+       #enabled: true
+
+  #Git info
+  git:
+    properties: 123456 # resource ref to generated git info properties file
+
+  oauth2:
+    resource:
+      userInfoUri: ${ENV_OAUTH2_USER_INFO_URI:http://localhost:9999/uaa/user}
+
+  rabbitmq:
+    host: ${ENV_RABBITMQ_HOST:127.0.0.1}
+    port: ${ENV_RABBITMQ_PORT:5672}
+    # Username: guest, password:guest. ONLY valid for 127.0.0.1 access.
+    # If want to access other IP, must use other Username/Password.
+    username: ${ENV_RABBITMQ_USERNAME:test}
+    password: ${ENV_RABBITMQ_PASSWORD:test}
+    virtualhost: /
+    dynamic: true
+      
+  # JMX
+  jmx:
+    enabled: true # Expose MBeans from Spring
+
+# ACTUATOR PROPERTIES
+management:
+  context-path: /
+  security:
+    enabled: true
+
+# SECURITY (SecurityProperties)
+security:
+  basic:
+    enabled: false
+  user:
+    name: zsd
+    password: zsd
+
+test:
+  timeInterceptor: false    
+  
+diagnosis:
+  alarmEnableEmailNotification: true  
+
+feign:
+  hystrix:
+    enabled: true
+  logging:
+    level: FULL
+
+    
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+      circuitBreaker:
+        requestVolumeThreshold: 5
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
