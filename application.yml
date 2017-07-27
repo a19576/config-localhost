@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8455}
+  port: ${PORT:8445}
 
 version: v1.0
 
